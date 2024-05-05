@@ -61,7 +61,7 @@ const getallblogs = asynchandler(async (req, res) => {
         throw new Apierror(400, "No blogs found")
     }
 
-    return res.status(200).json(new Apiresponse(200, blogs, "All blogs"))
+    return res.status(200).json(new Apiresponse(200, blogs, "All blogs found"))
 })
 
-export default createblog && getallblogs
+export { createblog, getallblogs }
