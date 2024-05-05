@@ -8,6 +8,10 @@ const commentschema = new Schema({
     commentby: {
         type: String,
         ref: "User"
+    },
+    post: {
+        type: Schema.Types.ObjectId,
+        ref: "Blog",
     }
 },
     { timestamps: true }

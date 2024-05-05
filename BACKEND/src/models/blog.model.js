@@ -10,7 +10,7 @@ const blogschema = new Schema({
         required:true
     },
     author:{
-        type:String,
+        type:Schema.Types.ObjectId,
         required:true,
         ref:"User"
     },
@@ -22,6 +22,14 @@ const blogschema = new Schema({
         type:String,
         required:true
     },
+    view:{
+        type:Number,
+        default:0
+    },
+    likes:{
+        type:Number,
+        default:0
+    },
     isPublished:{
         type:Boolean,
         default:false
@@ -30,4 +38,6 @@ const blogschema = new Schema({
     timestamps:true
 })
 
-export const Blog = mongoose.model("Blog",blogschema)
+ const Blog = mongoose.model("Blog",blogschema)
+
+ export default Blog

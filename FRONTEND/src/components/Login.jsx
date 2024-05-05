@@ -43,7 +43,7 @@ function Login() {
     }
   return (
     <>
-    <Header />
+  
     <section className=' flex flex-col justify-center items-center'>
     <div className='mt-5 bg-white w-full max-w-md mx-2 rounded overflow-hidden p-4'>
       <h1 className='text-2xl text-blue-600'>Welcome To the Chat App</h1>
