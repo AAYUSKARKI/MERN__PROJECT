@@ -2,6 +2,7 @@ import  Blog  from "../models/blog.model.js";
 import { asynchandler } from "../utils/asynchandler.js";
 import { Apierror } from "../utils/apierror.js";
 import { User } from "../models/user.model.js";
+import { io } from "../index.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Apiresponse } from "../utils/apiresponse.js";
 
@@ -64,4 +65,54 @@ const getallblogs = asynchandler(async (req, res) => {
     return res.status(200).json(new Apiresponse(200, blogs, "All blogs found"))
 })
 
-export { createblog, getallblogs }
+const getsingleblog = asynchandler(async (req, res) => {
+
+    const blog = await Blog.findById(req.params.id).populate("author")
+
+    if(!blog){
+        throw new Apierror(400, "Blog not found")
+    }
+
+    return res.status(200).json(new Apiresponse(200, blog, "Blog found"))
+})
+
+const updateblog = asynchandler(async (req, res) => {
+
+    const { title, description, category, isPublished } = req.body
+
+    //console.log(title, description,  category, isPublished)
+
+    //if(!title || !description  || !category || !isPublished){
+    //     throw new Apierror(400, "All fields are required")
+    // }
+
+    
+
+    const blog = await Blog.findByIdAndUpdate(req.params.id, {
+        title,
+        description,
+        category,
+        isPublished,
+    }, {
+        new: true
+    })
+
+    if(!blog){
+        throw new Apierror(400, "Blog not found")
+    }
+
+    return res.status(200).json(new Apiresponse(200, blog, "Blog updated successfully"))
+
+})
+
+const deleteblog = asynchandler(async (req, res) => {
+
+    const blog = await Blog.findByIdAndDelete(req.params.id)
+
+    if(!blog){
+        throw new Apierror(400, "Blog not found")
+    }
+
+    return res.status(200).json(new Apiresponse(200, blog, "Blog deleted successfully"))
+})
+export { createblog, getallblogs , getsingleblog , updateblog , deleteblog}
