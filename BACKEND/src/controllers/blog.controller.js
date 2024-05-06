@@ -47,6 +47,8 @@ const createblog = asynchandler(async (req, res) => {
 
     const createdBlog = await Blog.findById(blog._id).populate("author")
 
+    io.emit("blogcreated", createdBlog)
+
     if(!createdBlog){
         throw new Apierror(400, "Blog not created")
     }
@@ -61,7 +63,6 @@ const getallblogs = asynchandler(async (req, res) => {
     if(!blogs){
         throw new Apierror(400, "No blogs found")
     }
-
     return res.status(200).json(new Apiresponse(200, blogs, "All blogs found"))
 })
 
