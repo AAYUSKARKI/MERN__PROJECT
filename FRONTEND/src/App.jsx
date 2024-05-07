@@ -6,6 +6,8 @@ import Login from './components/Login'
 import Createblog from './components/Createblog'
 import CombinedBlogcards from './components/CombinedBlogcards'
 import Updateblog from './components/Updatecards'
+import Mainpage from './components/Mainpage'
+import Blogdetail from './components/Blogdetail'
 const App = () => {
 
 
@@ -20,6 +22,8 @@ const App = () => {
           <Route path='/createblog' element={<Createblog />}/>
           <Route path='/getallblogs' element={<CombinedBlogcards />}/>
           <Route path='/updateblog/:id' element={<Updateblog />}/>
+          <Route path='/mainpage' element={<Mainpage />}/>
+          <Route path='/blogdetail/:id' element={<Blogdetail />}/>
         </Routes>
     </Router>
    </>

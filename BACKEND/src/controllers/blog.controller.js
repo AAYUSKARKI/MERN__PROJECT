@@ -5,6 +5,7 @@ import { User } from "../models/user.model.js";
 import { io } from "../index.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Apiresponse } from "../utils/apiresponse.js";
+import { Comment } from "../models/comment.model.js";
 
 const createblog = asynchandler(async (req, res) => {
     const { title, description, category, isPublished } = req.body
@@ -116,4 +117,43 @@ const deleteblog = asynchandler(async (req, res) => {
 
     return res.status(200).json(new Apiresponse(200, blog, "Blog deleted successfully"))
 })
-export { createblog, getallblogs , getsingleblog , updateblog , deleteblog}
+
+const addComment = asynchandler(async (req, res) => {
+
+    const { comment } = req.body
+
+    const blog = await Blog.findById(req.params.id)
+
+    if(!blog){
+        throw new Apierror(400, "Blog not found")   
+    }
+
+    // const user = await User.findById(req.user._id)
+
+    // if(!user){
+    //     throw new Apierror(400, "User not found")
+    // }
+
+    const newComment = await Comment.create({
+        comment,
+        // commentby: req.user._id,
+        post: req.params.id
+    })
+
+    if(!newComment){
+        throw new Apierror(400, "Comment not added")
+    }
+
+    const createdComment = await Comment.findById(newComment._id)
+
+    if(!createdComment){
+        throw new Apierror(400, "Comment not found")
+    }
+console.log(comment,"is comment")
+    io.emit("commentadded", comment)
+    
+    return res.status(200).json(new Apiresponse(200, createdComment, "Comment added successfully"))
+
+
+})
+export { createblog, getallblogs , getsingleblog , updateblog , deleteblog , addComment}

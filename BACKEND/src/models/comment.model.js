@@ -6,7 +6,7 @@ const commentschema = new Schema({
         required: true
     },
     commentby: {
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: "User"
     },
     post: {

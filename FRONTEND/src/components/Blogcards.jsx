@@ -1,6 +1,8 @@
 import React from 'react'
-
+import {Link} from 'react-router-dom'
 function Blogcards({blog}) {
+
+  const description = blog.description.substring(0, 100)
   console.log(blog)
   return (
     <>
@@ -8,9 +10,9 @@ function Blogcards({blog}) {
   <figure><img src={blog.image} alt="Movie"/></figure>
   <div className="card-body">
     <h2 className="card-title">{blog.title}</h2>
-    <p>{blog.description}</p>
+    <p>{description}</p>
     <div className="card-actions justify-end">
-      <button className="btn btn-primary">Watch</button>
+      <button className="btn btn-primary"><Link to={`/blogdetail/${blog._id}`}>Read more</Link></button>
     </div>
   </div>
 </div>
